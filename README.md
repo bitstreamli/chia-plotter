@@ -179,6 +179,41 @@ scl enable devtoolset-7 bash
 ./build/chia_plot --help
 ```
 ---
+### CentOS 8
+```bash
+git clone https://github.com/madMAx43v3r/chia-plotter.git
+cd chia-plotter
+
+git submodule update --init
+sudo yum install epel-release -y
+sudo yum install cmake3 -y
+ln /usr/bin/cmake3 /usr/bin/cmake
+# Install a package with repository for your system:
+# On CentOS, install package centos-release-scl available in CentOS repository:
+sudo yum install centos-release-scl -y
+#必须编译安装gmp和libsodium
+
+wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz
+tar xvf gmp-6.2.1.tar.xz
+cd gmp-6.2.1
+./configure --enable-cxx
+make
+make check
+sudo make install
+
+wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.18-stable.tar.gz
+tar -zxf libsodium-1.0.18-stable.tar.gz
+cd libsodium-stable
+
+./configure --prefix=/usr
+make && make check
+sudo make install
+sudo ldconfig
+
+./make_devel.sh
+./build/chia_plot --help
+```
+---
 ### Clear Linux
 ```bash
 sudo swupd update
